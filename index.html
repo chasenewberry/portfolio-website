@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+  <title>Chase Newberry | Mechanical Engineering Portfolio</title>
+  <meta name="description" content="Portfolio of Chase Newberry, Mechanical Engineering student at Texas A&M University. Mechanical design, FEA structural analysis, rapid prototyping, and precision fabrication." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            accent: {
+              400: '#38bdf8', /* Technical sky cyan */
+              500: '#0ea5e9',
+              600: '#0284c7'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Clean Minimalist Styling & Scrollbar suppression -->
+  <style>
+    /* Hide scrollbars while preserving native scrollability */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Modal animation */
+    .modal-overlay.flex {
+      animation: modalOverlayFadeIn 0.2s ease-out forwards;
+    }
+    .modal-overlay.flex .modal-card {
+      animation: modalCardZoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes modalOverlayFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes modalCardZoomIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-accent-500 selection:text-white flex flex-col min-h-screen">
+
+  <!-- ==================== FIXED NAVIGATION ==================== -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/80 transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Monogram / Brand -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-700/80 flex items-center justify-center font-mono font-semibold text-zinc-100 group-hover:border-accent-400 group-hover:text-accent-400 transition-colors">
+          CN
+        </div>
+        <div class="flex flex-col">
+          <span class="font-semibold text-sm tracking-tight text-zinc-100 group-hover:text-white transition-colors">Chase Newberry</span>
+          <span class="text-[11px] font-mono text-zinc-400">Mechanical Engineering · TAMU</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-300">
+        <a href="#projects" class="hover:text-white hover:text-accent-400 transition-colors">Featured Projects</a>
+        <a href="#experience" class="hover:text-white hover:text-accent-400 transition-colors">Leadership & Experience</a>
+        <a href="#contact" class="hover:text-white hover:text-accent-400 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Action CTAs -->
+      <div class="flex items-center gap-3">
+        <a href="/assets/Chase_Newberry_Resume.pdf" target="_blank" download="Chase_Newberry_Resume.pdf" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-xs font-mono font-medium text-zinc-200 hover:text-white border border-zinc-700 hover:border-zinc-600 transition-all shadow-sm">
+          <svg class="w-3.5 h-3.5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Resume.pdf</span>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" type="button" class="md:hidden p-2 rounded-lg bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800 focus:outline-none" aria-label="Toggle navigation menu">
+          <svg id="menu-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-lg px-4 py-4 space-y-3">
+      <a href="#projects" class="block py-2 text-sm font-medium text-zinc-300 hover:text-accent-400 transition-colors mobile-link">Featured Projects</a>
+      <a href="#experience" class="block py-2 text-sm font-medium text-zinc-300 hover:text-accent-400 transition-colors mobile-link">Leadership & Experience</a>
+      <a href="#contact" class="block py-2 text-sm font-medium text-zinc-300 hover:text-accent-400 transition-colors mobile-link">Contact</a>
+      <div class="pt-2 border-t border-zinc-800">
+        <a href="/assets/Chase_Newberry_Resume.pdf" target="_blank" download="Chase_Newberry_Resume.pdf" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-zinc-900 text-xs font-mono text-zinc-200 border border-zinc-700">
+          <svg class="w-4 h-4 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Download Resume (PDF)</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="flex-grow pt-24">
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        
+        <!-- Left: Bio & CTAs (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          <!-- Status & Credential Badges -->
+          <div class="flex flex-wrap items-center gap-2.5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Texas A&M University · Mechanical Engineering</span>
+            </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/90 border border-zinc-700/80 text-xs font-mono text-zinc-300 shadow-sm">
+              <span class="px-1.5 py-0.5 rounded bg-zinc-800 text-accent-400 font-bold font-mono">3.69 GPA</span>
+              <span class="text-zinc-400">Honors Academy Minor</span>
+            </div>
+          </div>
+
+          <!-- Headline -->
+          <h1 class="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-tight">
+            Mechanical Design, <span class="text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 via-zinc-300 to-accent-400">FEA Simulation</span> & Precision Prototyping
+          </h1>
+
+          <!-- Bio Summary from content.md -->
+          <p class="text-base sm:text-lg text-zinc-300 leading-relaxed">
+            Mechanical engineering sophomore at <span class="text-white font-medium">Texas A&M University</span> (GPA: 3.69, Honors Academy Minor). Experienced in end-to-end mechanical design, SOLIDWORKS FEA, 3D printing prototyping, and practical hands-on fabrication and repair.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#projects" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-zinc-950 font-medium text-sm hover:bg-zinc-200 transition-colors shadow-sm">
+              <span>Explore Projects</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </a>
+            <a href="/assets/Chase_Newberry_Resume.pdf" target="_blank" download="Chase_Newberry_Resume.pdf" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-zinc-900 text-zinc-200 hover:text-white font-medium text-sm border border-zinc-800 hover:border-zinc-700 transition-colors">
+              <svg class="w-4 h-4 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Download Resume</span>
+            </a>
+            <a href="#contact" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-transparent text-zinc-400 hover:text-zinc-200 font-medium text-sm border border-zinc-800/80 hover:border-zinc-700 transition-colors">
+              <span>Get in Touch</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: 1:1 Aspect Ratio Portrait Image (5 cols) -->
+        <div class="lg:col-span-5 flex justify-center lg:justify-end">
+          <div class="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] group">
+            <!-- Ambient technical backdrop glow -->
+            <div class="absolute -inset-1 bg-gradient-to-tr from-accent-500/20 via-zinc-800/30 to-transparent rounded-2xl blur-xl -z-10 group-hover:from-accent-500/30 transition-all duration-500"></div>
+            
+            <!-- Card frame -->
+            <div class="relative rounded-2xl p-2.5 bg-zinc-900/80 border border-zinc-800 shadow-2xl backdrop-blur-sm">
+              <!-- 1:1 Aspect Ratio Container -->
+              <div class="aspect-square w-full overflow-hidden rounded-xl bg-zinc-950 border border-zinc-800/70 relative shadow-inner">
+                <img 
+                  src="/assets/hero.jpeg" 
+                  alt="Chase Newberry - Texas A&M Mechanical Engineering" 
+                  width="400"
+                  height="400"
+                  fetchpriority="high"
+                  loading="eager"
+                  class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
+                />
+              </div>
+
+              <!-- Technical HUD Caption Bar -->
+              <div class="mt-2.5 px-3 py-2 rounded-lg bg-zinc-950/80 border border-zinc-800/60 flex items-center justify-between text-xs font-mono">
+                <div class="flex items-center gap-2 text-zinc-300">
+                  <span class="w-2 h-2 rounded-full bg-accent-400 animate-pulse"></span>
+                  <span class="font-medium">Chase Newberry</span>
+                </div>
+                <span class="text-zinc-500">ASME Officer · MEEN '29</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== FEATURED PROJECTS ==================== -->
+    <section id="projects" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-zinc-800">
+        <div>
+          <div class="text-xs font-mono uppercase tracking-widest text-accent-400 mb-1">Portfolio & Technical Work</div>
+          <h2 class="text-3xl font-bold tracking-tight text-white">Featured Engineering Projects</h2>
+        </div>
+        <p class="text-xs font-mono text-zinc-400 mt-2 sm:mt-0">Swipe or click chevrons to browse images</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- ==================== PROJECT 1: ASME GO-KART ==================== -->
+        <article class="flex flex-col rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700/80 transition-all duration-300 overflow-hidden shadow-lg">
+          
+          <!-- Carousel Component (Aspect 16:10 + Technical Sub-bar) -->
+          <div data-carousel="gokart" class="flex flex-col select-none">
+            <!-- Viewport Container (Aspect 16:10) -->
+            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden group">
+              <!-- Scroll Track -->
+              <div class="carousel-track flex w-full h-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar" tabindex="0" aria-label="Go-kart project gallery">
+                
+                <!-- Slide 1: Hero (Real Photo -> object-cover) -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="0" data-caption="Competition Day: Team with finished go-kart">
+                  <img src="/assets/projects/gokart_hero.jpg" alt="ASME Go-Kart team in front of finished chassis at competition" class="w-full h-full object-cover select-none" loading="eager" />
+                </div>
+
+                <!-- Slide 2: CAD Model (CAD Screenshot -> object-contain bg-zinc-950) -->
+                <div class="snap-center shrink-0 w-full h-full relative bg-zinc-950" data-index="1" data-caption="SOLIDWORKS: Isometric plane frame CAD model">
+                  <img src="/assets/projects/gokart_1.png" alt="Isometric CAD model of go-kart chassis" class="w-full h-full object-contain bg-zinc-950 select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 3: Static Load FEA (16:9 FEA Plot -> object-contain bg-zinc-950, 100% uncropped!) -->
+                <div class="snap-center shrink-0 w-full h-full relative bg-zinc-950" data-index="2" data-caption="FEA Simulation: Static load stress distribution plot">
+                  <img src="/assets/projects/gokart_2.jpeg" alt="Static load FEA stress plot" class="w-full h-full object-contain bg-zinc-950 select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 4: Left Cornering Load FEA (16:9 FEA Plot -> object-contain bg-zinc-950, 100% uncropped!) -->
+                <div class="snap-center shrink-0 w-full h-full relative bg-zinc-950" data-index="3" data-caption="FEA Simulation: Left cornering quasi-static stress plot">
+                  <img src="/assets/projects/gokart_3_left.jpeg" alt="Left cornering quasi-static FEA stress plot" class="w-full h-full object-contain bg-zinc-950 select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 5: Right Cornering Load FEA (16:9 FEA Plot -> object-contain bg-zinc-950, 100% uncropped!) -->
+                <div class="snap-center shrink-0 w-full h-full relative bg-zinc-950" data-index="4" data-caption="FEA Simulation: Right cornering quasi-static stress plot">
+                  <img src="/assets/projects/gokart_4_right.jpeg" alt="Right cornering quasi-static FEA stress plot" class="w-full h-full object-contain bg-zinc-950 select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 6: Fixture Jig (Portrait 3:4 -> object-contain bg-zinc-950) -->
+                <div class="snap-center shrink-0 w-full h-full relative bg-zinc-950" data-index="5" data-caption="Fixturing Jig: Unwelded A513 tubing aligned in plywood jig">
+                  <img src="/assets/projects/gokart_5.jpg" alt="Unwelded go-kart frame in custom plywood fixturing jig" class="w-full h-full object-contain bg-zinc-950 select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 7: Fixture Jig Tacked (Portrait 3:4 -> object-contain bg-zinc-950) -->
+                <div class="snap-center shrink-0 w-full h-full relative bg-zinc-950" data-index="6" data-caption="Fixturing Jig: Tacked frame locked in precision jig">
+                  <img src="/assets/projects/gokart_6.jpg" alt="Tacked frame in custom plywood fixturing jig" class="w-full h-full object-contain bg-zinc-950 select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 8: Plasma Cutter (Real Photo -> object-cover) -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="7" data-caption="Fabrication: CNC plasma cutting steel floorpan">
+                  <img src="/assets/projects/gokart_7.jpg" alt="Plasma cutter in process of cutting floorpan" class="w-full h-full object-cover select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 9: Fully Welded Frame (Real Photo -> object-cover) -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="8" data-caption="Fabrication: Fully welded frame with floorpan & mounting plates">
+                  <img src="/assets/projects/gokart_8.jpg" alt="Fully welded frame with floorpan and mounting plates" class="w-full h-full object-cover select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 10: Painted Frame (Real Photo -> object-cover) -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="9" data-caption="Surface Finishing: Coated and painted structural chassis">
+                  <img src="/assets/projects/gokart_9.jpg" alt="Painted go-kart frame" class="w-full h-full object-cover select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 11: Assembled Go-Kart (Real Photo -> object-cover) -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="10" data-caption="System Integration: Fully assembled powertrain & steering">
+                  <img src="/assets/projects/gokart_10.jpg" alt="Assembled go-kart with engine and steering" class="w-full h-full object-cover select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 12: Driving at Competition (Real Photo -> object-cover) -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="11" data-caption="Field Validation: Dynamic track testing at competition">
+                  <img src="/assets/projects/gokart_11.jpg" alt="Chase driving the go-kart at competition day" class="w-full h-full object-cover select-none" loading="lazy" />
+                </div>
+
+              </div>
+
+              <!-- Navigation Chevrons -->
+              <button type="button" class="carousel-prev absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-zinc-950/80 hover:bg-zinc-900 text-white border border-zinc-700/80 backdrop-blur-md transition-all opacity-80 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 disabled:opacity-20 disabled:cursor-not-allowed z-10 shadow-lg" aria-label="Previous slide">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <button type="button" class="carousel-next absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-zinc-950/80 hover:bg-zinc-900 text-white border border-zinc-700/80 backdrop-blur-md transition-all opacity-80 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 disabled:opacity-20 disabled:cursor-not-allowed z-10 shadow-lg" aria-label="Next slide">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+
+            <!-- Dedicated Technical Sub-bar (Zero occlusion over preview!) -->
+            <div class="px-4 py-2.5 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between text-xs font-mono">
+              <div class="flex items-center gap-2 text-zinc-300 min-w-0 pr-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-accent-400 flex-shrink-0"></span>
+                <span class="carousel-caption text-[11px] sm:text-xs truncate font-medium text-zinc-300">Competition Day: Team with finished go-kart</span>
+              </div>
+              <div class="flex items-center gap-2.5 flex-shrink-0">
+                <div class="carousel-dots hidden sm:flex items-center gap-1"></div>
+                <span class="carousel-counter text-[11px] font-mono text-zinc-400 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">1 / 12</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-6 flex flex-col flex-grow justify-between">
+            <div>
+              <!-- Role & Timeline -->
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-xs font-mono text-accent-400 font-medium">Frame Subteam Lead</span>
+                <span class="text-xs font-mono text-zinc-400">Sep 2025 – Apr 2026</span>
+              </div>
+
+              <!-- Title -->
+              <h3 class="text-xl font-bold text-white mb-2 tracking-tight">
+                ASME Go-Kart Chassis Optimization & Fabrication
+              </h3>
+
+              <!-- Summary from content.md -->
+              <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+                Led the structural design, FEA optimization, and fabrication of a custom go-kart plane frame chassis, delivering a 6-second lap time improvement over competitors.
+              </p>
+
+              <!-- Technical Badges -->
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="px-2.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-xs font-mono">SOLIDWORKS</span>
+                <span class="px-2.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-xs font-mono">FEA Structural</span>
+                <span class="px-2.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-xs font-mono">A513 Carbon Steel</span>
+                <span class="px-2.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-xs font-mono">Fixturing & Welding</span>
+                <span class="px-2.5 py-0.5 rounded bg-accent-950/40 border border-accent-500/40 text-accent-300 text-xs font-mono">-6.0s Lap Delta</span>
+              </div>
+            </div>
+
+            <!-- Deep Dive Trigger Button -->
+            <button type="button" class="open-modal-btn w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium text-xs font-mono border border-zinc-700 hover:border-zinc-600 transition-all shadow-sm" data-modal="modal-gokart">
+              <span>Engineering Deep Dive (FEA & Kinematics)</span>
+              <svg class="w-4 h-4 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- ==================== PROJECT 2: 3D-PRINTED BLDC MOTOR ==================== -->
+        <article class="flex flex-col rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700/80 transition-all duration-300 overflow-hidden shadow-lg">
+          
+          <!-- Carousel Component (Aspect 16:10 + Technical Sub-bar) -->
+          <div data-carousel="motor" class="flex flex-col select-none">
+            <!-- Viewport Container (Aspect 16:10) -->
+            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden group">
+              <!-- Scroll Track -->
+              <div class="carousel-track flex w-full h-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar" tabindex="0" aria-label="3D-printed motor project gallery">
+                
+                <!-- Slide 1: Motor Hero Assembly -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="0" data-caption="SOLIDWORKS: Exploded assembly of outrunner BLDC motor">
+                  <img src="/assets/projects/motor_hero.jpeg" alt="SOLIDWORKS assembly model of 3D-printed BLDC motor" class="w-full h-full object-cover select-none" loading="eager" />
+                </div>
+
+                <!-- Slide 2: Printed Parts on Bed -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="1" data-caption="Additive Manufacturing: FDM printed stator & rotor parts on build plate">
+                  <img src="/assets/projects/motor_1.jpeg" alt="FDM printed motor components on build plate" class="w-full h-full object-cover select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 3: Assembled Stator with Coils -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="2" data-caption="Electromechanical Assembly: Stator with pressed bearings & wound copper coils">
+                  <img src="/assets/projects/motor_2.jpeg" alt="Assembled stator with press-fit bearings and wound coils" class="w-full h-full object-cover select-none" loading="lazy" />
+                </div>
+
+                <!-- Slide 4: Failed Rotor -->
+                <div class="snap-center shrink-0 w-full h-full relative" data-index="3" data-caption="Rotor Failure: Centrifugal failure at 14k RPM (analysis pending)">
+                  <img src="/assets/projects/motor_3.jpeg" alt="Assembled motor with failed rotor due to centrifugal force" class="w-full h-full object-cover select-none" loading="lazy" />
+                </div>
+
+              </div>
+
+              <!-- Navigation Chevrons -->
+              <button type="button" class="carousel-prev absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-zinc-950/80 hover:bg-zinc-900 text-white border border-zinc-700/80 backdrop-blur-md transition-all opacity-80 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 disabled:opacity-20 disabled:cursor-not-allowed z-10 shadow-lg" aria-label="Previous slide">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <button type="button" class="carousel-next absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-zinc-950/80 hover:bg-zinc-900 text-white border border-zinc-700/80 backdrop-blur-md transition-all opacity-80 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 disabled:opacity-20 disabled:cursor-not-allowed z-10 shadow-lg" aria-label="Next slide">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+
+            <!-- Dedicated Technical Sub-bar (Visually consistent with Go-Kart) -->
+            <div class="px-4 py-2.5 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between text-xs font-mono">
+              <div class="flex items-center gap-2 text-zinc-300 min-w-0 pr-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-accent-400 flex-shrink-0"></span>
+                <span class="carousel-caption text-[11px] sm:text-xs truncate font-medium text-zinc-300">SOLIDWORKS: Exploded assembly of outrunner BLDC motor</span>
+              </div>
+              <div class="flex items-center gap-2.5 flex-shrink-0">
+                <div class="carousel-dots hidden sm:flex items-center gap-1"></div>
+                <span class="carousel-counter text-[11px] font-mono text-zinc-400 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">1 / 4</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-6 flex flex-col flex-grow justify-between">
+            <div>
+              <!-- Role & Timeline -->
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-xs font-mono text-accent-400 font-medium">Personal Engineering Project</span>
+                <span class="text-xs font-mono text-zinc-400">May 2026 – Present</span>
+              </div>
+
+              <!-- Title -->
+              <h3 class="text-xl font-bold text-white mb-2 tracking-tight">
+                Fully 3D-Printed Outrunner Brushless DC Motor
+              </h3>
+
+              <!-- Summary from content.md -->
+              <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+                Designed and prototyped an outrunner-style BLDC motor from scratch featuring an integrated shaft and toolless snap assembly under a $25 BOM.
+              </p>
+
+              <!-- Technical Badges -->
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="px-2.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-xs font-mono">SOLIDWORKS</span>
+                <span class="px-2.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-xs font-mono">FDM Prototyping</span>
+                <span class="px-2.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-xs font-mono">14,000 RPM</span>
+                <span class="px-2.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-xs font-mono">0.22 N⋅m Stall</span>
+                <span class="px-2.5 py-0.5 rounded bg-accent-950/40 border border-accent-500/40 text-accent-300 text-xs font-mono">&lt;$25 BOM</span>
+              </div>
+            </div>
+
+            <!-- Deep Dive Trigger Button -->
+            <button type="button" class="open-modal-btn w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium text-xs font-mono border border-zinc-700 hover:border-zinc-600 transition-all shadow-sm" data-modal="modal-motor">
+              <span>Engineering Deep Dive (Metrics & Rotor Failure)</span>
+              <svg class="w-4 h-4 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==================== LEADERSHIP & EXPERIENCE ==================== -->
+    <section id="experience" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+      <div class="mb-10 pb-4 border-b border-zinc-800">
+        <div class="text-xs font-mono uppercase tracking-widest text-accent-400 mb-1">Career & Responsibility</div>
+        <h2 class="text-3xl font-bold tracking-tight text-white">Leadership & Practical Experience</h2>
+      </div>
+
+      <div class="space-y-6">
+
+        <!-- Experience 1: Revive Mechanical LLC -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700/80 transition-all">
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-3">
+            <div>
+              <span class="text-xs font-mono text-accent-400 font-medium">Founder & Owner</span>
+              <h3 class="text-xl font-bold text-white tracking-tight">Revive Mechanical LLC</h3>
+            </div>
+            <div class="text-xs font-mono text-zinc-400">
+              Jun 2026 – Present · Boerne, TX
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-sm text-zinc-300">
+            <li class="flex items-start gap-3">
+              <span class="text-accent-400 font-mono mt-0.5">▹</span>
+              <span>Founded a single-member LLC delivering mechanical asset restoration, custom CAD/3D-printed client solutions, and technical maintenance.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-accent-400 font-mono mt-0.5">▹</span>
+              <span>Managed full client billing, sourcing, and financial operations, generating <span class="text-white font-medium">$3,000+ in revenue</span> across 13 client engagements.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Experience 2: TAMU ASME Logistics Officer -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700/80 transition-all">
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-3">
+            <div>
+              <span class="text-xs font-mono text-accent-400 font-medium">Logistics Officer</span>
+              <h3 class="text-xl font-bold text-white tracking-tight">Texas A&M American Society of Mechanical Engineers (ASME)</h3>
+            </div>
+            <div class="text-xs font-mono text-zinc-400">
+              Jun 2025 – Present · College Station, TX
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-sm text-zinc-300">
+            <li class="flex items-start gap-3">
+              <span class="text-accent-400 font-mono mt-0.5">▹</span>
+              <span>Sourced and procured <span class="text-white font-medium">$5,000 in tools, machinery, and equipment</span> to build out an active workspace for Technical Branch projects.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-accent-400 font-mono mt-0.5">▹</span>
+              <span>Coordinated day-of logistics, vendor sourcing, and venue scheduling for weekly engineering meetings and technical workshops under fixed budget constraints.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Experience 3: TAMU Cycling Team Treasurer -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700/80 transition-all">
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-3">
+            <div>
+              <span class="text-xs font-mono text-accent-400 font-medium">Treasurer</span>
+              <h3 class="text-xl font-bold text-white tracking-tight">Texas A&M Cycling Team</h3>
+            </div>
+            <div class="text-xs font-mono text-zinc-400">
+              Jun 2025 – Present · College Station, TX
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-sm text-zinc-300">
+            <li class="flex items-start gap-3">
+              <span class="text-accent-400 font-mono mt-0.5">▹</span>
+              <span>Managed <span class="text-white font-medium">$20,000 annual operating budget</span> spanning university allocations, commercial sponsorships, and member dues for 30 athletes.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-accent-400 font-mono mt-0.5">▹</span>
+              <span>Planned and executed logistics, travel, and payments for 6 in-state away races and 2 national championship events while balancing ledger accounts.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT / FOOTER ==================== -->
+    <section id="contact" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+      <div class="p-8 sm:p-12 rounded-3xl bg-zinc-900/80 border border-zinc-800 relative overflow-hidden">
+        <!-- Subtle background glow -->
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-accent-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-3xl relative z-10">
+          <div class="text-xs font-mono uppercase tracking-widest text-accent-400 mb-1">Get In Touch</div>
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">Let's Connect & Build</h2>
+          <p class="text-zinc-300 text-sm sm:text-base leading-relaxed mb-8">
+            Seeking mechanical engineering co-op, internship, and research opportunities. Open to discussions regarding mechanical chassis design, FEA stress optimization, and electromechanical prototyping.
+          </p>
+
+          <!-- Contact Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <!-- Email -->
+            <div class="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between group">
+              <div class="flex items-center gap-3">
+                <div class="p-2.5 rounded-lg bg-zinc-900 text-accent-400 border border-zinc-800">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <div>
+                  <div class="text-[11px] font-mono text-zinc-400">Email</div>
+                  <a href="mailto:C0727@tamu.edu" class="text-sm font-mono text-white hover:text-accent-400 transition-colors">C0727@tamu.edu</a>
+                </div>
+              </div>
+              <button type="button" id="copy-email-btn" class="px-2.5 py-1 text-xs font-mono rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 transition-colors" title="Copy email address">
+                Copy
+              </button>
+            </div>
+
+            <!-- Phone -->
+            <div class="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 flex items-center gap-3">
+              <div class="p-2.5 rounded-lg bg-zinc-900 text-accent-400 border border-zinc-800">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              </div>
+              <div>
+                <div class="text-[11px] font-mono text-zinc-400">Phone</div>
+                <a href="tel:8304288264" class="text-sm font-mono text-white hover:text-accent-400 transition-colors">830-428-8264</a>
+              </div>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 flex items-center gap-3">
+              <div class="p-2.5 rounded-lg bg-zinc-900 text-accent-400 border border-zinc-800">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45c-.88 0-1.6.72-1.6 1.6 0 .88.72 1.6 1.6 1.6.88 0 1.6-.72 1.6-1.6 0-.88-.72-1.6-1.6-1.6Z"/></svg>
+              </div>
+              <div>
+                <div class="text-[11px] font-mono text-zinc-400">LinkedIn</div>
+                <a href="https://www.linkedin.com/in/chasenewberry" target="_blank" rel="noopener noreferrer" class="text-sm font-mono text-white hover:text-accent-400 transition-colors">in/chasenewberry</a>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div class="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 flex items-center gap-3">
+              <div class="p-2.5 rounded-lg bg-zinc-900 text-accent-400 border border-zinc-800">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <div class="text-[11px] font-mono text-zinc-400">Location</div>
+                <span class="text-sm font-mono text-white">San Antonio / College Station, TX</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Download Action -->
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="/assets/Chase_Newberry_Resume.pdf" target="_blank" download="Chase_Newberry_Resume.pdf" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent-500 hover:bg-accent-400 text-zinc-950 font-bold text-sm transition-colors shadow-lg shadow-accent-500/20">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>Download Chase Newberry's Resume</span>
+            </a>
+            <a href="#" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-zinc-400 hover:text-white text-xs font-mono border border-zinc-800 transition-colors">
+              <span>Back to Top ↑</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="border-t border-zinc-800/80 bg-zinc-950 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-400">
+      <div class="flex items-center gap-2">
+        <span>© <span id="year-span">2026</span> Chase Newberry.</span>
+        <span>·</span>
+        <span>Mechanical Engineering Portfolio</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 text-zinc-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span>Raspberry Pi · Nginx Alpine</span>
+        </span>
+        <span>·</span>
+        <span>Pure HTML5 / Tailwind CDN / Vanilla JS</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- ==================== DEEP DIVE MODAL: ASME GO-KART ====================== -->
+  <!-- ========================================================================= -->
+  <div id="modal-gokart" class="modal-overlay fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-zinc-950/85 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="modal-gokart-title">
+    <div class="modal-card relative w-full max-w-4xl max-h-[90vh] rounded-2xl bg-zinc-950 text-zinc-100 border border-zinc-800 shadow-2xl flex flex-col overflow-hidden">
+      
+      <!-- Sticky Modal Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-800 bg-zinc-950/95 sticky top-0 z-20">
+        <div>
+          <div class="text-[11px] font-mono text-accent-400 uppercase tracking-wider">Engineering Deep Dive</div>
+          <h2 id="modal-gokart-title" class="text-lg sm:text-xl font-bold text-white tracking-tight">ASME Go-Kart Chassis Optimization & Fabrication</h2>
+        </div>
+        <button type="button" class="close-modal-btn p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 focus:outline-none" aria-label="Close modal">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Scrollable Modal Body -->
+      <div class="overflow-y-auto p-6 space-y-8 no-scrollbar">
+        
+        <!-- Key Metrics Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-400">Lap Delta</div>
+            <div class="text-xl font-bold font-mono text-accent-400 mt-1">-6.00 s</div>
+            <div class="text-[11px] text-zinc-400 font-mono">on 24s circuit</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-400">Material</div>
+            <div class="text-base font-bold font-mono text-white mt-1">A513 Steel</div>
+            <div class="text-[11px] text-zinc-400 font-mono">Square structural tubing</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-400">Analysis</div>
+            <div class="text-base font-bold font-mono text-white mt-1">Static & Quasi-Static</div>
+            <div class="text-[11px] text-zinc-400 font-mono">Cornering load FEA</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-400">Fixturing</div>
+            <div class="text-base font-bold font-mono text-white mt-1">Plywood Jig</div>
+            <div class="text-[11px] text-zinc-400 font-mono">Zero-warp precision lock</div>
+          </div>
+        </div>
+
+        <!-- Technical Deep-Dive Sections from content.md -->
+        <div class="space-y-6 text-sm text-zinc-300">
+          
+          <div>
+            <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-accent-400"></span>
+              The Objective
+            </h3>
+            <p class="leading-relaxed bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/80">
+              Design a rigid, lightweight frame accommodating drivetrain, steering, and braking systems while meeting strict safety margins under competition regulations. The challenge lay in engineering sufficient torsional compliance to aid mechanical cornering grip without sacrificing structural integrity under high-g lateral transitions.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-accent-400"></span>
+              Engineering & Analysis (SOLIDWORKS FEA)
+            </h3>
+            <p class="leading-relaxed bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/80 mb-3">
+              Conducted structural FEA in SOLIDWORKS to maximize torsional rigidity under quasi-static cornering loads while minimizing total chassis weight. Evaluated von Mises stress distributions across static baseline loading, left cornering quasi-static load cases, and right cornering quasi-static load cases to ensure stress concentrations remained well below yield across all welded junctions.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-accent-400"></span>
+              Kinematics & Stability
+            </h3>
+            <p class="leading-relaxed bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/80">
+              Strategically lengthened the wheelbase to improve high-speed directional stability and reduce snap-oversteer. Positioned mounting plates and seat placement to optimize the longitudinal and lateral center of gravity (CG), resulting in predictable weight transfer during heavy braking into hairpins.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-accent-400"></span>
+              Fabrication & Fixturing Strategy
+            </h3>
+            <p class="leading-relaxed bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/80">
+              Constructed a full-scale CNC-routed plywood jig to locate and hold raw A513 square tubing segments rigid during tacking and final weld passes. This fixturing technique completely eliminated thermal distortion across diagonal frame rails, guaranteeing true parallel steering knuckle geometry and drivetrain alignment. A plasma-cut steel floorpan was fused to act as a structural shear plate, significantly enhancing plane torsional stiffness.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-accent-400"></span>
+              Competition Results
+            </h3>
+            <p class="leading-relaxed bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/80">
+              Achieved a competitive chassis that posted lap times <span class="text-white font-bold">6 seconds faster</span> than competitors across a 24-second course circuit. The frame passed all pre-race technical inspections on first pass and maintained structural alignment throughout multiple heat cycles.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- High-Resolution Inspection Gallery in Modal -->
+        <div class="pt-6 border-t border-zinc-800">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-semibold text-white">Full-Resolution Technical Inspection Gallery</h3>
+            <span class="text-xs font-mono text-zinc-400">12 High-Res Photographs & FEA Plots</span>
+          </div>
+
+          <!-- Active Large Image Viewer -->
+          <div class="rounded-xl border border-zinc-800 bg-zinc-950 p-2 mb-4">
+            <div class="relative w-full max-h-[65vh] flex items-center justify-center overflow-hidden rounded-lg bg-zinc-900">
+              <img id="gokart-modal-viewer" src="/assets/projects/gokart_hero.jpg" alt="Active inspection image" class="max-h-[65vh] w-auto max-w-full object-contain mx-auto" />
+            </div>
+            <div id="gokart-modal-viewer-caption" class="p-3 text-center text-xs font-mono text-zinc-300">
+              Competition Day: Team with finished go-kart
+            </div>
+          </div>
+
+          <!-- Thumbnail Strip -->
+          <div class="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-40 overflow-y-auto no-scrollbar p-1">
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-accent-400 focus:outline-none" data-target="gokart-modal-viewer" data-caption="Competition Day: Team with finished go-kart" data-src="/assets/projects/gokart_hero.jpg">
+              <img src="/assets/projects/gokart_hero.jpg" alt="Thumb 1" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="gokart-modal-viewer" data-caption="SOLIDWORKS: Isometric plane frame CAD model" data-src="/assets/projects/gokart_1.png">
+              <img src="/assets/projects/gokart_1.png" alt="Thumb 2" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="gokart-modal-viewer" data-caption="FEA Simulation: Static load stress distribution plot" data-src="/assets/projects/gokart_2.jpeg">
+              <img src="/assets/projects/gokart_2.jpeg" alt="Thumb 3" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="gokart-modal-viewer" data-caption="FEA Simulation: Left cornering quasi-static stress plot" data-src="/assets/projects/gokart_3_left.jpeg">
+              <img src="/assets/projects/gokart_3_left.jpeg" alt="Thumb 4" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="gokart-modal-viewer" data-caption="FEA Simulation: Right cornering quasi-static stress plot" data-src="/assets/projects/gokart_4_right.jpeg">
+              <img src="/assets/projects/gokart_4_right.jpeg" alt="Thumb 5" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none bg-zinc-900" data-target="gokart-modal-viewer" data-caption="Fixturing Jig: Unwelded A513 tubing aligned in plywood jig" data-src="/assets/projects/gokart_5.jpg">
+              <img src="/assets/projects/gokart_5.jpg" alt="Thumb 6" class="w-full h-full object-contain bg-zinc-900" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none bg-zinc-900" data-target="gokart-modal-viewer" data-caption="Fixturing Jig: Tacked frame locked in precision jig" data-src="/assets/projects/gokart_6.jpg">
+              <img src="/assets/projects/gokart_6.jpg" alt="Thumb 7" class="w-full h-full object-contain bg-zinc-900" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="gokart-modal-viewer" data-caption="Fabrication: CNC plasma cutting steel floorpan" data-src="/assets/projects/gokart_7.jpg">
+              <img src="/assets/projects/gokart_7.jpg" alt="Thumb 8" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="gokart-modal-viewer" data-caption="Fabrication: Fully welded frame with floorpan & mounting plates" data-src="/assets/projects/gokart_8.jpg">
+              <img src="/assets/projects/gokart_8.jpg" alt="Thumb 9" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="gokart-modal-viewer" data-caption="Surface Finishing: Coated and painted structural chassis" data-src="/assets/projects/gokart_9.jpg">
+              <img src="/assets/projects/gokart_9.jpg" alt="Thumb 10" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="gokart-modal-viewer" data-caption="System Integration: Fully assembled powertrain & steering" data-src="/assets/projects/gokart_10.jpg">
+              <img src="/assets/projects/gokart_10.jpg" alt="Thumb 11" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="gokart-modal-viewer" data-caption="Field Validation: Dynamic track testing at competition" data-src="/assets/projects/gokart_11.jpg">
+              <img src="/assets/projects/gokart_11.jpg" alt="Thumb 12" class="w-full h-full object-cover" />
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3 border-t border-zinc-800 bg-zinc-950 flex items-center justify-between">
+        <span class="text-xs font-mono text-zinc-400">Press ESC or click outside to dismiss</span>
+        <button type="button" class="close-modal-btn px-4 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-mono text-white transition-colors">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- ==================== DEEP DIVE MODAL: 3D-PRINTED MOTOR ================== -->
+  <!-- ========================================================================= -->
+  <div id="modal-motor" class="modal-overlay fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-zinc-950/85 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="modal-motor-title">
+    <div class="modal-card relative w-full max-w-4xl max-h-[90vh] rounded-2xl bg-zinc-950 text-zinc-100 border border-zinc-800 shadow-2xl flex flex-col overflow-hidden">
+      
+      <!-- Sticky Modal Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-800 bg-zinc-950/95 sticky top-0 z-20">
+        <div>
+          <div class="text-[11px] font-mono text-accent-400 uppercase tracking-wider">Engineering Deep Dive</div>
+          <h2 id="modal-motor-title" class="text-lg sm:text-xl font-bold text-white tracking-tight">Fully 3D-Printed Outrunner Brushless DC Motor</h2>
+        </div>
+        <button type="button" class="close-modal-btn p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 focus:outline-none" aria-label="Close modal">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Scrollable Modal Body -->
+      <div class="overflow-y-auto p-6 space-y-8 no-scrollbar">
+        
+        <!-- Key Metrics Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-400">Max Speed</div>
+            <div class="text-xl font-bold font-mono text-accent-400 mt-1">14,000 RPM</div>
+            <div class="text-[11px] text-zinc-400 font-mono">Verified optical tachometer</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-400">Stall Torque</div>
+            <div class="text-base font-bold font-mono text-white mt-1">0.22 N⋅m</div>
+            <div class="text-[11px] text-zinc-400 font-mono">12V 3-phase excitation</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-400">BOM Cost</div>
+            <div class="text-base font-bold font-mono text-white mt-1">&lt;$25.00</div>
+            <div class="text-[11px] text-zinc-400 font-mono">Including magnets & wire</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-400">Assembly</div>
+            <div class="text-base font-bold font-mono text-white mt-1">Toolless Snap</div>
+            <div class="text-[11px] text-zinc-400 font-mono">Integrated-shaft rotor</div>
+          </div>
+        </div>
+
+        <!-- Technical Deep-Dive Sections from content.md -->
+        <div class="space-y-6 text-sm text-zinc-300">
+          
+          <div>
+            <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-accent-400"></span>
+              The Objective
+            </h3>
+            <p class="leading-relaxed bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/80">
+              Create a low-cost, functional 3-phase outrunner motor using additive manufacturing without requiring complex machined shafts or specialized assembly fixtures. The goal was to prove the feasibility of functional electro-mechanical prime movers created using accessible consumer FDM 3D printing equipment.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-accent-400"></span>
+              Design Innovations & Geometry
+            </h3>
+            <p class="leading-relaxed bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/80 mb-3">
+              Implemented an integrated-shaft geometry and toolless mechanical interlocking assembly, keeping total material cost under $25. Press-fit channels were engineered with 0.15mm interference allowances for deep-groove ball bearings directly into the printed stator core.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-accent-400"></span>
+              Performance Verification & Metrics
+            </h3>
+            <p class="leading-relaxed bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/80">
+              Achieved a verified top speed of <span class="text-white font-bold">14,000 RPM</span> and a stall torque of <span class="text-white font-bold">0.22 N⋅m</span> powered at 12V through an electronic speed controller (ESC). Phase windings were manually tensioned and terminated in a wye configuration.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-semibold text-white mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-accent-400"></span>
+              Rotor Mechanical Failure (Analysis Pending)
+            </h3>
+            <p class="leading-relaxed bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/80">
+              During high-RPM unloaded test runs approaching 14,000 RPM, the initial FDM-printed rotor shell suffered mechanical failure due to excessive centrifugal forces from the embedded neodymium magnets exceeding the hoop strength of the printed perimeter wall. Formal failure analysis is pending to quantify the stress state, investigate fracture surfaces, and optimize reinforcement geometry for subsequent iterations.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- High-Resolution Inspection Gallery in Modal -->
+        <div class="pt-6 border-t border-zinc-800">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-semibold text-white">Full-Resolution Technical Inspection Gallery</h3>
+            <span class="text-xs font-mono text-zinc-400">4 High-Res CAD Models & Photographs</span>
+          </div>
+
+          <!-- Active Large Image Viewer -->
+          <div class="rounded-xl border border-zinc-800 bg-zinc-950 p-2 mb-4">
+            <div class="relative w-full max-h-[65vh] flex items-center justify-center overflow-hidden rounded-lg bg-zinc-900">
+              <img id="motor-modal-viewer" src="/assets/projects/motor_hero.jpeg" alt="Active inspection image" class="max-h-[65vh] w-auto max-w-full object-contain mx-auto" />
+            </div>
+            <div id="motor-modal-viewer-caption" class="p-3 text-center text-xs font-mono text-zinc-300">
+              SOLIDWORKS: Assembly model of outrunner BLDC motor
+            </div>
+          </div>
+
+          <!-- Thumbnail Strip -->
+          <div class="grid grid-cols-4 gap-2 max-h-40 overflow-y-auto no-scrollbar p-1">
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-accent-400 focus:outline-none" data-target="motor-modal-viewer" data-caption="SOLIDWORKS: Assembly model of outrunner BLDC motor" data-src="/assets/projects/motor_hero.jpeg">
+              <img src="/assets/projects/motor_hero.jpeg" alt="Thumb 1" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="motor-modal-viewer" data-caption="Additive Manufacturing: FDM printed motor parts on build plate" data-src="/assets/projects/motor_1.jpeg">
+              <img src="/assets/projects/motor_1.jpeg" alt="Thumb 2" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="motor-modal-viewer" data-caption="Electromechanical: Assembled stator with pressed bearings & wound coils" data-src="/assets/projects/motor_2.jpeg">
+              <img src="/assets/projects/motor_2.jpeg" alt="Thumb 3" class="w-full h-full object-cover" />
+            </button>
+            <button type="button" class="gallery-thumb aspect-[4/3] rounded-lg overflow-hidden border-2 border-transparent hover:border-zinc-500 focus:outline-none" data-target="motor-modal-viewer" data-caption="Rotor Failure: Centrifugal failure at 14k RPM (analysis pending)" data-src="/assets/projects/motor_3.jpeg">
+              <img src="/assets/projects/motor_3.jpeg" alt="Thumb 4" class="w-full h-full object-cover" />
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3 border-t border-zinc-800 bg-zinc-950 flex items-center justify-between">
+        <span class="text-xs font-mono text-zinc-400">Press ESC or click outside to dismiss</span>
+        <button type="button" class="close-modal-btn px-4 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-mono text-white transition-colors">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- ==================== VANILLA JAVASCRIPT CONTROLLER ====================== -->
+  <!-- ========================================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // Dynamic Footer Year
+      const yearSpan = document.getElementById('year-span');
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+      // Mobile Menu Toggle
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('.mobile-link').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+          });
+        });
+      }
+
+      // 1-Click Copy Email Button
+      const copyBtn = document.getElementById('copy-email-btn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText('C0727@tamu.edu');
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = 'Copied!';
+            copyBtn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-500');
+            setTimeout(() => {
+              copyBtn.textContent = originalText;
+              copyBtn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-500');
+            }, 2000);
+          } catch (err) {
+            console.error('Clipboard error:', err);
+          }
+        });
+      }
+
+      // =======================================================================
+      // INSTAGRAM-STYLE PROJECT CAROUSELS (Vanilla JS + CSS Scroll Snap)
+      // =======================================================================
+      const carousels = document.querySelectorAll('[data-carousel]');
+
+      carousels.forEach(carousel => {
+        const track = carousel.querySelector('.carousel-track');
+        const slides = track.querySelectorAll('[data-index]');
+        const prevBtn = carousel.querySelector('.carousel-prev');
+        const nextBtn = carousel.querySelector('.carousel-next');
+        const counter = carousel.querySelector('.carousel-counter');
+        const captionElem = carousel.querySelector('.carousel-caption');
+        const dotsContainer = carousel.querySelector('.carousel-dots');
+        const total = slides.length;
+
+        if (!track || total === 0) return;
+
+        // Populate Pagination Dots
+        if (dotsContainer) {
+          dotsContainer.innerHTML = '';
+          slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.setAttribute('aria-label', `Go to slide ${i + 1} of ${total}`);
+            dot.className = `h-1.5 rounded-full transition-all duration-300 ${i === 0 ? 'w-4 bg-accent-400' : 'w-1.5 bg-zinc-600 hover:bg-zinc-400'}`;
+            dot.addEventListener('click', (e) => {
+              e.stopPropagation();
+              scrollToSlide(i);
+            });
+            dotsContainer.appendChild(dot);
+          });
+        }
+
+        const dots = dotsContainer ? dotsContainer.querySelectorAll('button') : [];
+
+        // Scroll helper
+        function scrollToSlide(index) {
+          const clampedIndex = Math.max(0, Math.min(index, total - 1));
+          const slideWidth = track.clientWidth;
+          track.scrollTo({
+            left: clampedIndex * slideWidth,
+            behavior: 'smooth'
+          });
+          updateState(clampedIndex);
+        }
+
+        // State updater
+        function updateState(activeIndex) {
+          // Counter
+          if (counter) {
+            counter.textContent = `${activeIndex + 1} / ${total}`;
+          }
+          // Dynamic Caption
+          if (captionElem && slides[activeIndex]) {
+            captionElem.textContent = slides[activeIndex].getAttribute('data-caption') || '';
+          }
+          // Dots
+          dots.forEach((dot, idx) => {
+            if (idx === activeIndex) {
+              dot.className = 'h-1.5 w-3.5 rounded-full bg-accent-400 transition-all duration-300';
+            } else {
+              dot.className = 'h-1.5 w-1.5 rounded-full bg-zinc-700 hover:bg-zinc-500 transition-all duration-300';
+            }
+          });
+          // Prev/Next buttons
+          if (prevBtn) prevBtn.disabled = activeIndex === 0;
+          if (nextBtn) nextBtn.disabled = activeIndex === total - 1;
+        }
+
+        // Chevrons click listeners
+        if (prevBtn) {
+          prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+            scrollToSlide(currentIndex - 1);
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+            scrollToSlide(currentIndex + 1);
+          });
+        }
+
+        // Scroll listener for native touch swipe & trackpad scroll
+        let scrollTimeout;
+        track.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            const currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+            updateState(currentIndex);
+          }, 40);
+        }, { passive: true });
+
+        // Keyboard arrow navigation when track or carousel is focused
+        track.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+            scrollToSlide(currentIndex - 1);
+          } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            const currentIndex = Math.round(track.scrollLeft / track.clientWidth);
+            scrollToSlide(currentIndex + 1);
+          }
+        });
+
+        // Initialize state
+        updateState(0);
+      });
+
+      // =======================================================================
+      // MODAL DEEP DIVES (Rock-solid Cross-browser Overlay for Safari & Chrome)
+      // =======================================================================
+      const openModalBtns = document.querySelectorAll('.open-modal-btn');
+      const modalOverlays = document.querySelectorAll('.modal-overlay');
+
+      function openModal(modal) {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal(modal) {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+
+      openModalBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const modalId = btn.getAttribute('data-modal');
+          const targetModal = document.getElementById(modalId);
+          openModal(targetModal);
+        });
+      });
+
+      modalOverlays.forEach(modal => {
+        // Explicit close buttons inside modal
+        modal.querySelectorAll('.close-modal-btn').forEach(closeBtn => {
+          closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeModal(modal);
+          });
+        });
+
+        // Click outside on backdrop to close
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeModal(modal);
+          }
+        });
+      });
+
+      // ESC key closes any open modal
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          modalOverlays.forEach(modal => closeModal(modal));
+        }
+      });
+
+      // =======================================================================
+      // MODAL HIGH-RES INSPECTION GALLERY VIEWER
+      // =======================================================================
+      const galleryThumbs = document.querySelectorAll('.gallery-thumb');
+
+      galleryThumbs.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          const targetViewerId = thumb.getAttribute('data-target');
+          const newSrc = thumb.getAttribute('data-src');
+          const newCaption = thumb.getAttribute('data-caption');
+
+          const viewerImg = document.getElementById(targetViewerId);
+          const captionDiv = document.getElementById(`${targetViewerId}-caption`);
+
+          if (viewerImg) {
+            viewerImg.src = newSrc;
+          }
+          if (captionDiv) {
+            captionDiv.textContent = newCaption;
+          }
+
+          // Update active thumb ring
+          const parentStrip = thumb.closest('.grid');
+          if (parentStrip) {
+            parentStrip.querySelectorAll('.gallery-thumb').forEach(t => {
+              t.classList.remove('border-accent-400');
+              t.classList.add('border-transparent');
+            });
+            thumb.classList.remove('border-transparent');
+            thumb.classList.add('border-accent-400');
+          }
+        });
+      });
+
+    });
+  </script>
+</body>
+</html>

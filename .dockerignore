@@ -1,0 +1,7 @@
+.git
+.gitignore
+.DS_Store
+*.md
+tasks.md
+docker-compose.yml
+.dockerignore

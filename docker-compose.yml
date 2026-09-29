@@ -1,0 +1,13 @@
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chase-portfolio:latest
+    container_name: mechanical-portfolio
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "8080:80"
+    environment:
+      - TZ=America/Chicago
