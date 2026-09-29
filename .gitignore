@@ -1,0 +1,6 @@
+# macOS metadata
+.DS_Store
+
+# Development notes & planning files (local/dev only)
+content.md
+tasks.md
