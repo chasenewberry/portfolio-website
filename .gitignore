@@ -4,3 +4,6 @@
 # Development notes & planning files (local/dev only)
 content.md
 tasks.md
+
+# Local agent configuration
+.gemini/
